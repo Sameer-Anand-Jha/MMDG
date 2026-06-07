@@ -1,0 +1,13 @@
+# Existing dependencies (unchanged)
+torch>=2.0.0
+torchvision>=0.15.0
+pytorchvideo>=0.1.5
+audiomentations>=0.30.0
+soundfile>=0.12.1
+opencv-python>=4.7.0
+imageio[ffmpeg]>=2.28.0
+pandas>=1.5.0
+numpy>=1.24.0
+
+# New: CLIP text encoder support
+transformers>=4.35.0      # CLIPTextModel, CLIPTokenizer, AutoModel, AutoTokenizer
