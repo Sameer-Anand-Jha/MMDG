@@ -1,13 +1,13 @@
-# clip_multimodal — CLIP-guided Contrastive Action Recognition
+# clip_multimodal - CLIP-guided Contrastive Action Recognition
 
 ## What changed (and what didn't)
 
 | File | Status | What changed |
 |------|--------|--------------|
-| `augmentations.py` | **unchanged** | — |
-| `dataloader.py` | **unchanged** | — |
-| `metrics.py` | **unchanged** | — |
-| `preprocess_frames.py` | **unchanged** | — |
+| `augmentations.py` | **unchanged** | - |
+| `dataloader.py` | **unchanged** | - |
+| `metrics.py` | **unchanged** | - |
+| `preprocess_frames.py` | **unchanged** | - |
 | `config.py` | **+CLIPConfig** | New `CLIPConfig` dataclass added; `Config` gains a `clip` field |
 | `pipeline.py` | **+clip_multimodal** | `CLIPTextEncoderWrapper`, `CLIPMultimodalModel`, `InfoNCELoss`, `_build_clip_multimodal` added; existing pipelines untouched |
 | `train.py` | **minor** | Temperature logging added; no structural change |
@@ -54,7 +54,7 @@ The negatives are all N–1 other *class text embeddings* (not other samples in 
 
 **Inference is zero-shot style.**
 At test time `model.forward()` returns the same `(B, N)` logit matrix.
-`argmax` over dim=1 gives the predicted class — identical to every other pipeline.
+`argmax` over dim=1 gives the predicted class - identical to every other pipeline.
 `metrics.py` and `test.py` require no changes.
 
 ---
@@ -118,7 +118,7 @@ All options are pulled automatically from HuggingFace on first run.
 | `laion/CLIP-ViT-H-14-laion2B-s32B-b79K` | 1024 | Best open | ~1.6 GB |
 | `google/siglip-large-patch16-384` | 1024 | Best overall | ~1.6 GB |
 
-Since the text encoder is **frozen and shared across the whole dataset**, its VRAM cost is fixed and small. The text forward pass encodes only 7 class prompts per forward call — negligible compute.
+Since the text encoder is **frozen and shared across the whole dataset**, its VRAM cost is fixed and small. The text forward pass encodes only 7 class prompts per forward call - negligible compute.
 
 ---
 
@@ -150,7 +150,7 @@ CLIP is sensitive to prompt phrasing. For cross-domain generalisation (human →
 | N = batch size (typically 32k–65k) | N = 7 (number of action classes) |
 | Symmetric loss (image→text + text→image) | Asymmetric: only visual→text direction |
 
-The per-class-text negative formulation is closer to zero-shot CLIP evaluation than to the original contrastive pre-training, but it's applied *during fine-tuning* with ground-truth labels — giving the supervised signal while keeping the structured text embedding space.
+The per-class-text negative formulation is closer to zero-shot CLIP evaluation than to the original contrastive pre-training, but it's applied *during fine-tuning* with ground-truth labels - giving the supervised signal while keeping the structured text embedding space.
 
 ---
 
@@ -166,4 +166,4 @@ python train.py --resume outputs/ckpt_epoch020_human.pt --epochs 200
 python test.py --checkpoint outputs/best_clip_multimodal_human.pt
 ```
 
-To switch from `base_multimodal` to `clip_multimodal` mid-project, start fresh — the model weights are not compatible because the classifier head is replaced by projection heads.
+To switch from `base_multimodal` to `clip_multimodal` mid-project, start fresh - the model weights are not compatible because the classifier head is replaced by projection heads.
